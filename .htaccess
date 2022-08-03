@@ -1,4 +1,3 @@
-; Apache サーバで mod_rewrite を有効にしている場合、 .htaccessファイルでいくつかの簡単なルールを使用することでこのファイルを簡単に外すことができます。
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

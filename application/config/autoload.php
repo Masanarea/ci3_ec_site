@@ -89,7 +89,10 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array();
+// $autoload['helper'] = array('url')は最初にURLを読み込んでくれる
+// <link rel="stylesheet" type="text/css" href="">
+// <link rel="stylesheet" type="text/css" href="http://localhost:8888/assets/css/style.css">
+$autoload['helper'] = array('url');
 
 /*
 | -------------------------------------------------------------------

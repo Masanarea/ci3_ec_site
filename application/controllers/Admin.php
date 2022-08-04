@@ -4,8 +4,8 @@ class Admin extends CI_Controller
 {
     public function index()
     {
-        setFlashData();
-        die();
+        // setFlashData();
+        // die();
         if ($this->session->userdata("aId")) {
             // loadで簡単テンプレート
             // 何もないのにloadするとエラーになる
@@ -17,8 +17,9 @@ class Admin extends CI_Controller
             $this->load->view('admin/header/footer');
             $this->load->view('admin/header/htmlclose');
         } else {
-            $this->session->set_flashdata("error", "Please login first to access your admin panel");
-            redirect("admin/login");
+            setFlashData("alert-danger","Please login first to access your admin panel", "admin/login");
+            // $this->session->set_flashdata("error", "Please login first to access your admin panel");
+            // redirect("admin/login");
         }
     }
 
@@ -46,17 +47,22 @@ class Admin extends CI_Controller
                 if ($this->session->userdata("aId")) {
                     // echo "Logged in";
                     redirect("admin");
+                }else{
+                    echo "session was not created..";
                 }
             } else {
-                $this->session->set_flashdata("error", "Email or Password is not match. Please check your Email and Password");
-                redirect('admin/login');
+                setFlashData("alert-warning", "Email or Password is not match. Please check your Email and Password", 'admin/login');
+                // $this->session->set_flashdata("error", "Email or Password is not match. Please check your Email and Password");
+                // redirect('admin/login');
             }
         } else {
-            $this->session->set_flashdata("error", "Please check the require field");
-            redirect('admin/login');
+            setFlashData("alert-warning", "Please check the require field", 'admin/login');
+            // $this->session->set_flashdata("error", "Please check the require field");
+            // redirect('admin/login');
         }
     }
 
+    // helpers/custom_helper.phpで表示されななくなる
     public function logOut()
     {
         if ($this->session->userdata("aId")) {

@@ -83,7 +83,6 @@ class Admin extends CI_Controller
             $this->load->view('admin/header/navtop');
             $this->load->view('admin/header/navleft');
             $this->load->view('admin/home/newCategory');
-            // $this->load->view('admin/home/index');
             $this->load->view('admin/header/footer');
             $this->load->view('admin/header/htmlclose');
         }else{
@@ -131,5 +130,23 @@ class Admin extends CI_Controller
         }else{
             setFlashData("alert-danger","Please login first to add your category", "admin/login");
         }
+    }
+
+    public function allCategories(){
+        if(adminLoggedIn()){
+            $data["allCategories"] = $this->modAdmin->getAllCategories();
+            $this->load->view('admin/header/header');
+            $this->load->view('admin/header/css');
+            $this->load->view('admin/header/navtop');
+            $this->load->view('admin/header/navleft');
+            $this->load->view('admin/home/allCategories');
+            $this->load->view('admin/header/footer');
+            $this->load->view('admin/header/htmlclose');
+        }else{
+            setFlashData("alert-danger","Please login first to add your category", "admin/login");
+        }
+}
+    public function getAllCategories(){
+        $this->db->get_where("categories", array("cStatus" =>1));
     }
 }

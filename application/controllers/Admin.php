@@ -111,15 +111,19 @@ class Admin extends CI_Controller
                     $fileName = $this->upload->data();
                     $data["cDp"] = $fileName["file_name"];
                     $data["cDate"] = date("Y-M-d h-i-sa");
-                    // exit("success upload");
+                    $data["adminId"] = getAdminId();
                 }
-                $addData = $this->modAdmin->addCategory($data);
-                if($addData){
-                    setFlashData("alert-danger","You have successfully added your category", "admin/newCategory");
+                $addData = $this->modAdmin->checkCategory($data);
+                if($addData->num_rows() > 0){
+                    setFlashData("alert-danger","The category already exist.", "admin/newCategory");
                 }else{
-                    setFlashData("alert-danger","You can\'t add your category right now", "admin/newCategory");
+                    $addData = $this->modAdmin->addCategory($data);
+                    if($addData){
+                        setFlashData("alert-success","You have successfully added your category", "admin/newCategory");
+                    }else{
+                        setFlashData("alert-danger","You can\'t add your category right now", "admin/newCategory");
+                    }
                 }
-
             }else{
                 exit("名前 failed");
                 setFlashData("alert-danger","category name is required.", "admin/newCategory");

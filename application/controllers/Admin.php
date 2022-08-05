@@ -74,4 +74,58 @@ class Admin extends CI_Controller
             redirect("admin/login");
         }
     }
+
+    public function newCategory()
+    {
+        if(adminLoggedIn()){
+            $this->load->view('admin/header/header');
+            $this->load->view('admin/header/css');
+            $this->load->view('admin/header/navtop');
+            $this->load->view('admin/header/navleft');
+            $this->load->view('admin/home/newCategory');
+            // $this->load->view('admin/home/index');
+            $this->load->view('admin/header/footer');
+            $this->load->view('admin/header/htmlclose');
+        }else{
+            setFlashData("alert-danger","Please login first to add your category", "admin/login");
+        }
+    }
+
+    public function adddCategory(){
+        if(adminLoggedIn()){
+            // 開発用
+            // var_dump($_POST);
+            // var_dump($data["cName"]);
+            // exit;
+            $data["cName"] = $this->input->post("categoryName", true);
+            if (!empty($data["cName"])){
+                $path = realpath(APPPATH."../assets/images/categories/");
+                $config["upload_path"] = $path;
+                $config["allowed_types"] = "gif|png|jpg|jpeg";
+                // $config["allowed_type"] = "gif|png|jpg";
+                $this->load->library("upload", $config);
+                if(!$this->upload->do_upload("catDp")){
+                    $error = $this->upload->display_errors();
+                    setFlashData("alert-danger",$error, "admin/newCategory");
+                }else{
+                    $fileName = $this->upload->data();
+                    $data["cDp"] = $fileName["file_name"];
+                    $data["cDate"] = date("Y-M-d h-i-sa");
+                    // exit("success upload");
+                }
+                $addData = $this->modAdmin->addCategory($data);
+                if($addData){
+                    setFlashData("alert-danger","You have successfully added your category", "admin/newCategory");
+                }else{
+                    setFlashData("alert-danger","You can\'t add your category right now", "admin/newCategory");
+                }
+
+            }else{
+                exit("名前 failed");
+                setFlashData("alert-danger","category name is required.", "admin/newCategory");
+            }
+        }else{
+            setFlashData("alert-danger","Please login first to add your category", "admin/login");
+        }
+    }
 }

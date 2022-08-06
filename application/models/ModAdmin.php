@@ -45,4 +45,10 @@ class ModAdmin extends CI_Model
         $this->db->where("cId", $cId);
         return $this->db->update("categories",$data);
     }
+
+    public function deleteCategory($cId)
+    {
+        $this->db->where("cId", $cId);
+        return $this->db->delete("categories");
+    }
 }

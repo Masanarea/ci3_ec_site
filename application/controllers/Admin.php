@@ -175,7 +175,7 @@ class Admin extends CI_Controller
                     setFlashData("alert-danger", "Category not found", "admin/allCategories");
                 }
             } else {
-                setFlashData("alert-danger", "Something went wrongPlease login first to edit your category", "admin/allCategories");
+                setFlashData("alert-danger", "Something went wrong", "admin/allCategories");
             }
         } else {
             setFlashData("alert-danger", "Please login first to edit your category", "admin/login");
@@ -217,6 +217,30 @@ class Admin extends CI_Controller
             }
         } else {
             setFlashData("alert-danger", "updateCategory Please login first to add your category", "admin/login");
+        }
+    }
+
+    public function deleteCategory(){
+        if (adminLoggedIn()) {
+            if($this->input->is_ajax_request()){
+                $this->input->post("id", true);
+                $cId = $this->input->post("text", true);
+                if(!empty($cId) && isset($cId)){
+                    $cId = $this->encryption->decrypt($cId);
+                    $checkMd = $this->modAdmin->deleteCategory($cId);
+                    if($checkMd){
+                        echo "successfully deleted";
+                    }else{
+                        echo "You can\'t delete your category";
+                    }
+                }else{
+                    echo "value not found";
+                }
+            }else{
+                setFlashData("alert-danger", "Something went wrong ", "admin");
+            }
+        } else {
+            setFlashData("alert-danger", "Please login first ", "admin/login");
         }
     }
 }

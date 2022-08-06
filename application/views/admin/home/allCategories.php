@@ -25,7 +25,7 @@
                                 <a href="<?php echo site_url("admin/editCategory/".$category->cId);?>" class="btn btn-info">Edit</a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-danger">Delete</a>
+                                <a href="javascript:void(0)" class="btn btn-danger delcat" data-id="<?php echo $category->cId;?>" data-text="<?php echo $this->encryption->encrypt($category->cId)?>">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach ?>

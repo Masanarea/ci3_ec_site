@@ -17,7 +17,7 @@ class Admin extends CI_Controller
             $this->load->view('admin/header/footer');
             $this->load->view('admin/header/htmlclose');
         } else {
-            setFlashData("alert-danger","Please login first to access your admin panel", "admin/login");
+            setFlashData("alert-danger", "Please login first to access your admin panel", "admin/login");
             // $this->session->set_flashdata("error", "Please login first to access your admin panel");
             // redirect("admin/login");
         }
@@ -47,7 +47,7 @@ class Admin extends CI_Controller
                 if ($this->session->userdata("aId")) {
                     // echo "Logged in";
                     redirect("admin");
-                }else{
+                } else {
                     echo "session was not created..";
                 }
             } else {
@@ -77,7 +77,7 @@ class Admin extends CI_Controller
 
     public function newCategory()
     {
-        if(adminLoggedIn()){
+        if (adminLoggedIn()) {
             $this->load->view('admin/header/header');
             $this->load->view('admin/header/css');
             $this->load->view('admin/header/navtop');
@@ -85,59 +85,57 @@ class Admin extends CI_Controller
             $this->load->view('admin/home/newCategory');
             $this->load->view('admin/header/footer');
             $this->load->view('admin/header/htmlclose');
-        }else{
-            setFlashData("alert-danger","Please login first to add your category", "admin/login");
+        } else {
+            setFlashData("alert-danger", "Please login first to add your category", "admin/login");
         }
     }
 
-    public function adddCategory(){
-        if(adminLoggedIn()){
+    public function adddCategory()
+    {
+        if (adminLoggedIn()) {
             // 開発用
             // var_dump($_POST);
             // var_dump($data["cName"]);
             // exit;
             $data["cName"] = $this->input->post("categoryName", true);
-            if (!empty($data["cName"])){
+            if (!empty($data["cName"])) {
                 $path = realpath(APPPATH."../assets/images/categories/");
                 $config["upload_path"] = $path;
                 $config["allowed_types"] = "gif|png|jpg|jpeg";
                 // $config["allowed_type"] = "gif|png|jpg";
                 $this->load->library("upload", $config);
-                if(!$this->upload->do_upload("catDp")){
+                if (!$this->upload->do_upload("catDp")) {
                     $error = $this->upload->display_errors();
-                    setFlashData("alert-danger",$error, "admin/newCategory");
-                }else{
+                    setFlashData("alert-danger", $error, "admin/newCategory");
+                } else {
                     $fileName = $this->upload->data();
                     $data["cDp"] = $fileName["file_name"];
                     $data["cDate"] = date("Y-M-d h-i-sa");
                     $data["adminId"] = getAdminId();
                 }
                 $addData = $this->modAdmin->checkCategory($data);
-                if($addData->num_rows() > 0){
-                    setFlashData("alert-danger","The category already exist.", "admin/newCategory");
-                }else{
+                if ($addData->num_rows() > 0) {
+                    setFlashData("alert-danger", "The category already exist.", "admin/newCategory");
+                } else {
                     $addData = $this->modAdmin->addCategory($data);
-                    if($addData){
-                        setFlashData("alert-success","You have successfully added your category", "admin/newCategory");
-                    }else{
-                        setFlashData("alert-danger","You can\'t add your category right now", "admin/newCategory");
+                    if ($addData) {
+                        setFlashData("alert-success", "You have successfully added your category", "admin/newCategory");
+                    } else {
+                        setFlashData("alert-danger", "You can\'t add your category right now", "admin/newCategory");
                     }
                 }
-            }else{
+            } else {
                 exit("名前 failed");
-                setFlashData("alert-danger","category name is required.", "admin/newCategory");
+                setFlashData("alert-danger", "category name is required.", "admin/newCategory");
             }
-        }else{
-            setFlashData("alert-danger","Please login first to add your category", "admin/login");
+        } else {
+            setFlashData("alert-danger", "Please login first to add your category", "admin/login");
         }
     }
 
-
-
-
-
-    public function allCategories(){
-        if(adminLoggedIn()){
+    public function allCategories()
+    {
+        if (adminLoggedIn()) {
             $config["base_url"] = site_url("admin/allCategories");
             $totalRows = $this->modAdmin->getAllCategories();
             $config["total_rows"] = $totalRows;
@@ -145,19 +143,66 @@ class Admin extends CI_Controller
             $config["uri_segment"] = 3;
             $this->load->library('pagination');
             $this->pagination->initialize($config);
-            $page = ($this->uri->segment(3))? $this->uri->segment(3):0;
-            $data["allCategories"] = $this->modAdmin->fetchAllCategories($config["per_page"],$page);
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $data["allCategories"] = $this->modAdmin->fetchAllCategories($config["per_page"], $page);
             $data["links"] = $this->pagination->create_links();
 
             $this->load->view('admin/header/header');
             $this->load->view('admin/header/css');
             $this->load->view('admin/header/navtop');
             $this->load->view('admin/header/navleft');
-            $this->load->view('admin/home/allCategories',$data);
+            $this->load->view('admin/home/allCategories', $data);
             $this->load->view('admin/header/footer');
             $this->load->view('admin/header/htmlclose');
-        }else{
-            setFlashData("alert-danger","Please login first to add your category", "admin/login");
+        } else {
+            setFlashData("alert-danger", "Please login first to add your category", "admin/login");
+        }
+    }
+
+    public function editCategory($cId)
+    {
+        if (adminLoggedIn()) {
+            if (!empty($cId) && isset($cId)) {
+                $data["category"] =  $this->modAdmin->checkCategoryById($cId);
+                if (count($data["category"]) == 1) {
+                    $this->load->view('admin/header/header');
+                    $this->load->view('admin/header/css');
+                    $this->load->view('admin/header/navtop');
+                    $this->load->view('admin/header/navleft');
+                    $this->load->view('admin/home/editCategory', $data);
+                    $this->load->view('admin/header/footer');
+                    $this->load->view('admin/header/htmlclose');
+                } else {
+                    setFlashData("alert-danger", "Category not found", "admin/allCategories");
+                }
+            } else {
+                setFlashData("alert-danger", "Something went wrongPlease login first to edit your category", "admin/allCategories");
+            }
+        } else {
+            setFlashData("alert-danger", "Please login first to edit your category", "admin/login");
+        }
+    }
+    public function updateCategory()
+    {
+        if (adminLoggedIn()) {
+            $data["cName"] = $this->input->post("categoryName", true);
+            $cId = $this->input->post("xid", true);
+            // 開発用
+            // var_dump($data["cName"]);
+            // var_dump($cId);
+            // exit("開発中");
+            if (!empty($data["cName"]) && isset($data["cName"])) {
+                $reply = $this->modAdmin->updateCategory($data, $cId);
+                if ($reply) {
+                    setFlashData("alert-success", "You have successfully update your category", "admin/allCategories");
+                } else {
+                    setFlashData("alert-danger", "You can\'t update your category", "admin/allCategories");
+                }
+            } else {
+                setFlashData("alert-danger", "Category name is required", "admin/allCategories");
+            }
+        } else {
+            setFlashData("alert-danger", "updateCategory Please login first to add your category", "admin/login");
         }
     }
 }

@@ -34,4 +34,15 @@ class ModAdmin extends CI_Model
             return false;
         }
     }
+
+    public function checkCategoryById($cId)
+    {
+        return $this->db->get_where("categories", array("cId" =>$cId))->result_array();
+    }
+
+    public function updateCategory($data, $cId)
+    {
+        $this->db->where("cId", $cId);
+        return $this->db->update("categories",$data);
+    }
 }

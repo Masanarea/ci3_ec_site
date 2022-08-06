@@ -10,10 +10,8 @@
     </div>
     <div class="row padtop">
         <div class="col-md-6 col-md-offset-3">
-            <!-- 開発用 -->
-            <?php var_dump($links);?>
+            <h1>All Categories</h1>
             <?php if($allCategories):?>
-                <h1>working..</h1>
                 <table class="table table-dashed">
                     <?php foreach($allCategories as $category):?>
                         <tr>
@@ -24,17 +22,15 @@
                                 <?php echo $category->cName?>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-info">Edit</a>
+                                <a href="<?php echo site_url("admin/editCategory/".$category->cId);?>" class="btn btn-info">Edit</a>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-danger">Delete</a>
+                                <a href="" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach ?>
                 </table>
                 <?php echo $links?>
-                <!-- 開発用 -->
-                <h1>この上</h1>
             <?php else:?>
                 <h1>Not working..</h1>
             <?php endif;?>

@@ -13,6 +13,7 @@
         <div class="col-md-6 col-md-offset-1">
             <?php echo form_open_multipart("admin/updateCategory", "", "")?>
                 <input name="xid" type="hidden" value="<?php echo $category[0]["cId"]?>">
+                <input name="oldImage" type="hidden" value="<?php echo $category[0]["cDp"]?>">
                 <div class="form-group">
                     <?php echo form_input("categoryName", $category[0]["cName"], "class='form_control'")?>
                 </div>

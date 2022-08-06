@@ -102,7 +102,6 @@ class Admin extends CI_Controller
                 $path = realpath(APPPATH."../assets/images/categories/");
                 $config["upload_path"] = $path;
                 $config["allowed_types"] = "gif|png|jpg|jpeg";
-                // $config["allowed_type"] = "gif|png|jpg";
                 $this->load->library("upload", $config);
                 if (!$this->upload->do_upload("catDp")) {
                     $error = $this->upload->display_errors();
@@ -187,13 +186,28 @@ class Admin extends CI_Controller
         if (adminLoggedIn()) {
             $data["cName"] = $this->input->post("categoryName", true);
             $cId = $this->input->post("xid", true);
-            // 開発用
-            // var_dump($data["cName"]);
-            // var_dump($cId);
-            // exit("開発中");
+            $oldImage = $this->input->post("oldImage", true);
             if (!empty($data["cName"]) && isset($data["cName"])) {
+                if (isset($_FILES["catDp"]) && is_uploaded_file($_FILES["catDp"]["tmp_name"])) {
+                    $path = realpath(APPPATH."../assets/images/categories/");
+                    $config["upload_path"] = $path;
+                    $config["allowed_types"] = "gif|png|jpg|jpeg";
+                    $this->load->library("upload", $config);
+                    if (!$this->upload->do_upload("catDp")) {
+                        $error = $this->upload->display_errors();
+                        setFlashData("alert-danger", $error, "admin/allCategories");
+                    } else {
+                        $fileName = $this->upload->data();
+                        $data["cDp"] = $fileName["file_name"];
+                    }
+                }
                 $reply = $this->modAdmin->updateCategory($data, $cId);
                 if ($reply) {
+                    if (!empty($data["cDp"]) && isset($data["cDp"])) {
+                        if (file_exists($path."/".$oldImage)) {
+                            unlink($path."/".$oldImage);
+                        }
+                    }
                     setFlashData("alert-success", "You have successfully update your category", "admin/allCategories");
                 } else {
                     setFlashData("alert-danger", "You can\'t update your category", "admin/allCategories");

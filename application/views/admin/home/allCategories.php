@@ -10,17 +10,34 @@
     </div>
     <div class="row padtop">
         <div class="col-md-6 col-md-offset-3">
-            <?php echo form_open_multipart("admin/adddCategory", "", "")?>
-                <div class="form-group">
-                    <?php echo form_input("categoryName", "", "class='form_control'")?>
-                </div>
-                <div class="form-group">
-                    <?php echo  form_upload("catDp", "", "")?>
-                </div>
-                <div class="form-group">
-                    <?php echo  form_submit("Add Category", "Add Category", "class='btn btn-primary'")?>
-                </div>
-            <?php echo form_close();?>
+            <!-- 開発用 -->
+            <?php var_dump($links);?>
+            <?php if($allCategories):?>
+                <h1>working..</h1>
+                <table class="table table-dashed">
+                    <?php foreach($allCategories as $category):?>
+                        <tr>
+                            <td>
+                                <?php echo $category->cId?>
+                            </td>
+                            <td>
+                                <?php echo $category->cName?>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-info">Edit</a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                </table>
+                <?php echo $links?>
+                <!-- 開発用 -->
+                <h1>この上</h1>
+            <?php else:?>
+                <h1>Not working..</h1>
+            <?php endif;?>
         </div>
     </div>
 </div>

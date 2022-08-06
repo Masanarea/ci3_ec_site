@@ -132,21 +132,32 @@ class Admin extends CI_Controller
         }
     }
 
+
+
+
+
     public function allCategories(){
         if(adminLoggedIn()){
-            $data["allCategories"] = $this->modAdmin->getAllCategories();
+            $config["base_url"] = site_url("admin/allCategories");
+            $totalRows = $this->modAdmin->getAllCategories();
+            $config["total_rows"] = $totalRows;
+            $config["per_page"] = 1;
+            $config["uri_segment"] = 3;
+            $this->load->library('pagination');
+            $this->pagination->initialize($config);
+            $page = ($this->uri->segment(3))? $this->uri->segment(3):0;
+            $data["allCategories"] = $this->modAdmin->fetchAllCategories($config["per_page"],$page);
+            $data["links"] = $this->pagination->create_links();
+
             $this->load->view('admin/header/header');
             $this->load->view('admin/header/css');
             $this->load->view('admin/header/navtop');
             $this->load->view('admin/header/navleft');
-            $this->load->view('admin/home/allCategories');
+            $this->load->view('admin/home/allCategories',$data);
             $this->load->view('admin/header/footer');
             $this->load->view('admin/header/htmlclose');
         }else{
             setFlashData("alert-danger","Please login first to add your category", "admin/login");
         }
-}
-    public function getAllCategories(){
-        $this->db->get_where("categories", array("cStatus" =>1));
     }
 }

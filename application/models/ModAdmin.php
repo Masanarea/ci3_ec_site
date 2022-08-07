@@ -94,30 +94,30 @@ class ModAdmin extends CI_Model
         }
     }
 
-    // public function checkProductById($cId)
-    // {
-    //     return $this->db->get_where("categories", array("cId" =>$cId))->result_array();
-    // }
+    public function checkProductById($pId)
+    {
+        return $this->db->get_where("products", array("pId" =>$pId))->result_array();
+    }
 
-    // public function updateProduct($data, $cId)
-    // {
-    //     $this->db->where("cId", $cId);
-    //     return $this->db->update("categories",$data);
-    // }
+    public function updateProduct($data, $pId)
+    {
+        $this->db->where("pId", $pId);
+        return $this->db->update("products",$data);
+    }
 
-    // public function deleteProduct($cId)
-    // {
-    //     $this->db->where("cId", $cId);
-    //     return $this->db->delete("categories");
-    // }
+    public function deleteProduct($pId)
+    {
+        $this->db->where("pId", $pId);
+        return $this->db->delete("products");
+    }
 
-    // public function getProductImage($cId)
-    // {
-    //     return $this->db->select("cDp")->from("categories")->where("cId",$cId)->get()->result_array();
-    // }
+    public function getProductImage($pId)
+    {
+        return $this->db->select("pDp")->from("products")->where("pId",$pId)->get()->result_array();
+    }
 
-    // public function getProducts()
-    // {
-    //     return $this->db->get_where("categories", array("cStatus" =>1));
-    // }
+    public function getProducts()
+    {
+        return $this->db->get_where("products", array("pStatus" =>1));
+    }
 }

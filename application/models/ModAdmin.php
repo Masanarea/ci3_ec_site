@@ -74,4 +74,50 @@ class ModAdmin extends CI_Model
     {
         return $this->db->insert("products", $data);
     }
+
+    public function getAllProducts()
+    {
+        return $this->db->get_where("products", array("pStatus" =>1))->num_rows();
+    }
+
+    public function fetchAllProducts($limit,$start)
+    {
+        $this->db->limit($limit,$start);
+        $query = $this->db->get_where("products", array("pStatus" =>1));
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+    // public function checkProductById($cId)
+    // {
+    //     return $this->db->get_where("categories", array("cId" =>$cId))->result_array();
+    // }
+
+    // public function updateProduct($data, $cId)
+    // {
+    //     $this->db->where("cId", $cId);
+    //     return $this->db->update("categories",$data);
+    // }
+
+    // public function deleteProduct($cId)
+    // {
+    //     $this->db->where("cId", $cId);
+    //     return $this->db->delete("categories");
+    // }
+
+    // public function getProductImage($cId)
+    // {
+    //     return $this->db->select("cDp")->from("categories")->where("cId",$cId)->get()->result_array();
+    // }
+
+    // public function getProducts()
+    // {
+    //     return $this->db->get_where("categories", array("cStatus" =>1));
+    // }
 }

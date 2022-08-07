@@ -239,19 +239,15 @@ class Admin extends CI_Controller
                         }
                         $data["return"] = true;
                         $data["message"] = "successfully deleted";
-                        // convert to json type code
                         echo json_encode($data);
                     }else{
-                        // echo "You can\'t delete your category";
                         $data["return"] = true;
                         $data["message"] = "You can\'t delete your category";
                         echo json_encode($data);
                     }
                 }else{
-                    // echo "value not found";
                     $data["return"] = true;
                         $data["message"] = "value not found";
-                        // convert to json type code
                         echo json_encode($data);
                 }
             }else{
@@ -284,12 +280,7 @@ class Admin extends CI_Controller
             $data["pCompany"] = $this->input->post("company", true);
             $data["categoryId"] = $this->input->post("categoryId", true);
             // 開発用
-            // var_dump("pName");
-            // var_dump(!empty($data["pName"]));
             // var_dump("pCompany");
-            // var_dump(!empty($data["pCompany"]));
-            // var_dump("pCompany");
-            // var_dump(!empty($data["categoryId"]));
             // exit;
             if (!empty($data["pName"]) && !empty($data["pCompany"]) && !empty($data["categoryId"])) {
                 $path = realpath(APPPATH."../assets/images/products/");
@@ -319,6 +310,32 @@ class Admin extends CI_Controller
             } else {
                 setFlashData("alert-danger", "Please check the required fields.", "admin/newProduct");
             }
+        } else {
+            setFlashData("alert-danger", "Please login first to add your Product", "admin/login");
+        }
+    }
+
+    public function allProducts()
+    {
+        if (adminLoggedIn()) {
+            $config["base_url"] = site_url("admin/allProducts");
+            $totalRows = $this->modAdmin->getAllProducts();
+            $config["total_rows"] = $totalRows;
+            $config["per_page"] = 1;
+            $config["uri_segment"] = 3;
+            $this->load->library('pagination');
+            $this->pagination->initialize($config);
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $data["allProducts"] = $this->modAdmin->fetchAllProducts($config["per_page"], $page);
+            $data["links"] = $this->pagination->create_links();
+
+            $this->load->view('admin/header/header');
+            $this->load->view('admin/header/css');
+            $this->load->view('admin/header/navtop');
+            $this->load->view('admin/header/navleft');
+            $this->load->view('admin/home/allProducts', $data);
+            $this->load->view('admin/header/footer');
+            $this->load->view('admin/header/htmlclose');
         } else {
             setFlashData("alert-danger", "Please login first to add your Product", "admin/login");
         }

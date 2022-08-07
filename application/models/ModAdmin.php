@@ -51,4 +51,9 @@ class ModAdmin extends CI_Model
         $this->db->where("cId", $cId);
         return $this->db->delete("categories");
     }
+
+    public function getCategoryImage($cId)
+    {
+        return $this->db->select("cDp")->from("categories")->where("cId",$cId)->get()->result_array();
+    }
 }

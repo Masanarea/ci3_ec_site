@@ -12,11 +12,20 @@ $(function(){
                 text: text
             },
             success: function(data) {
-                console.log(data);
+                var ndata = JSON.parce(data);
+                // 開発用
+                // console.log(ndata);
+                if(ndata.return == true){
+                    $(".error").text(nData.message);
+                    $(".ccat"+id).fadeOut();
+                }else if(ndata.return == false){
+                    $(".error").text(nData.message);
+                }else{
+                    $(".error").text("Something went wrong");
+                }
             },
             error:function(){
-                console.log(data);
-                console.log("ajax失敗（adminCustom.js）");
+                $(".error").text("Something went wrong/ajax失敗（adminCustom.js）");
             }
         });
         });

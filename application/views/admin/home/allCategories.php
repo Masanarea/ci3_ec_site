@@ -14,12 +14,12 @@
             <?php if($allCategories):?>
                 <table class="table table-dashed">
                     <?php foreach($allCategories as $category):?>
-                        <tr>
+                        <tr class="ccat<?php echo $category->cId;?>">
                             <td>
-                                <?php echo $category->cId?>
+                                <?php echo $category->cId;?>
                             </td>
                             <td>
-                                <?php echo $category->cName?>
+                                <?php echo $category->cName;?>
                             </td>
                             <td>
                                 <a href="<?php echo site_url("admin/editCategory/".$category->cId);?>" class="btn btn-info">Edit</a>

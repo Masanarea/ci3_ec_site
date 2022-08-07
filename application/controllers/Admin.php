@@ -227,14 +227,37 @@ class Admin extends CI_Controller
                 $cId = $this->input->post("text", true);
                 if(!empty($cId) && isset($cId)){
                     $cId = $this->encryption->decrypt($cId);
+                    $oldImage = $this->modAdmin->getCategoryImage($cId);
+                    // 開発用
+                    // var_dump($oldImage);
+                    // die();
+                    if(!empty($oldImage) && count($oldImage) == 1){
+                        $realImage = $oldImage[0]["cDp"];
+                    }
                     $checkMd = $this->modAdmin->deleteCategory($cId);
                     if($checkMd){
-                        echo "successfully deleted";
+                        $path = realpath(APPPATH."../assets/images/categories/");
+                        if (!empty($realImage) && isset($realImage)) {
+                            if (file_exists($path."/".$realImage)) {
+                                unlink($path."/".$realImage);
+                            }
+                        }
+                        $data["return"] = true;
+                        $data["message"] = "successfully deleted";
+                        // convert to json type code
+                        echo json_encode($data);
                     }else{
-                        echo "You can\'t delete your category";
+                        // echo "You can\'t delete your category";
+                        $data["return"] = true;
+                        $data["message"] = "You can\'t delete your category";
+                        echo json_encode($data);
                     }
                 }else{
-                    echo "value not found";
+                    // echo "value not found";
+                    $data["return"] = true;
+                        $data["message"] = "value not found";
+                        // convert to json type code
+                        echo json_encode($data);
                 }
             }else{
                 setFlashData("alert-danger", "Something went wrong ", "admin");

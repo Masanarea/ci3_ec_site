@@ -56,4 +56,22 @@ class ModAdmin extends CI_Model
     {
         return $this->db->select("cDp")->from("categories")->where("cId",$cId)->get()->result_array();
     }
+
+    public function getCategories()
+    {
+        return $this->db->get_where("categories", array("cStatus" =>1));
+    }
+
+    public function checkProduct($data)
+    {
+        return $this->db->get_where("products", array(
+            "pName"=>$data["pName"],
+            "categoryId"=>$data["categoryId"],
+        ));
+    }
+
+    public function addProduct($data)
+    {
+        return $this->db->insert("products", $data);
+    }
 }

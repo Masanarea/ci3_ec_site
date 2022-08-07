@@ -93,10 +93,6 @@ class Admin extends CI_Controller
     public function adddCategory()
     {
         if (adminLoggedIn()) {
-            // 開発用
-            // var_dump($_POST);
-            // var_dump($data["cName"]);
-            // exit;
             $data["cName"] = $this->input->post("categoryName", true);
             if (!empty($data["cName"])) {
                 $path = realpath(APPPATH."../assets/images/categories/");
@@ -124,7 +120,6 @@ class Admin extends CI_Controller
                     }
                 }
             } else {
-                exit("名前 failed");
                 setFlashData("alert-danger", "category name is required.", "admin/newCategory");
             }
         } else {
@@ -264,6 +259,68 @@ class Admin extends CI_Controller
             }
         } else {
             setFlashData("alert-danger", "Please login first ", "admin/login");
+        }
+    }
+
+    public function newProduct()
+    {
+        if (adminLoggedIn()) {
+            $data["categories"] = $this->modAdmin->getCategories();
+            $this->load->view('admin/header/header');
+            $this->load->view('admin/header/css');
+            $this->load->view('admin/header/navtop');
+            $this->load->view('admin/header/navleft');
+            $this->load->view('admin/home/newProduct', $data);
+            $this->load->view('admin/header/footer');
+            $this->load->view('admin/header/htmlclose');
+        } else {
+            setFlashData("alert-danger", "Please login first to add your category", "admin/login");
+        }
+    }
+
+    public function addProduct(){
+        if (adminLoggedIn()) {
+            $data["pName"] = $this->input->post("productName", true);
+            $data["pCompany"] = $this->input->post("company", true);
+            $data["categoryId"] = $this->input->post("categoryId", true);
+            // 開発用
+            // var_dump("pName");
+            // var_dump(!empty($data["pName"]));
+            // var_dump("pCompany");
+            // var_dump(!empty($data["pCompany"]));
+            // var_dump("pCompany");
+            // var_dump(!empty($data["categoryId"]));
+            // exit;
+            if (!empty($data["pName"]) && !empty($data["pCompany"]) && !empty($data["categoryId"])) {
+                $path = realpath(APPPATH."../assets/images/products/");
+                $config["upload_path"] = $path;
+                $config["allowed_types"] = "gif|png|jpg|jpeg";
+                $this->load->library("upload", $config);
+                if (!$this->upload->do_upload("prodDp")) {
+                    $error = $this->upload->display_errors();
+                    setFlashData("alert-danger", $error, "admin/newProduct");
+                } else {
+                    $fileName = $this->upload->data();
+                    $data["pDp"] = $fileName["file_name"];
+                    $data["pDate"] = date("Y-m-d H-i-s");
+                    $data["adminId"] = getAdminId();
+                }
+                $addData = $this->modAdmin->checkProduct($data);
+                if ($addData->num_rows() > 0) {
+                    setFlashData("alert-danger", "The Product already exist.", "admin/newProduct");
+                } else {
+                    $addData = $this->modAdmin->addProduct($data);
+                    if ($addData) {
+                        setFlashData("alert-success", "You have successfully added your Product", "admin/newProduct");
+                    } else {
+                        setFlashData("alert-danger", "You can\'t add your product right now", "admin/newProduct");
+                    }
+                }
+            } else {
+                setFlashData("alert-danger", "Please check the required fields.", "admin/newProduct");
+            }
+        } else {
+            setFlashData("alert-danger", "Please login first to add your Product", "admin/login");
         }
     }
 }

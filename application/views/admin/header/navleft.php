@@ -65,6 +65,8 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo site_url("admin/newCategory")?>"> New Category</a></li>
             <li><a href="<?php echo site_url("admin/allCategories")?>"> All Category</a></li>
+            <li><a href="<?php echo site_url("admin/newProduct")?>"> New Product</a></li>
+            <li><a href="<?php echo site_url("admin/allProducts")?>"> All Product</a></li>
             <!-- <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
             <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
             <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li> -->

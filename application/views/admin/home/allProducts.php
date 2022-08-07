@@ -14,18 +14,18 @@
             <?php if($allProducts):?>
                 <table class="table table-dashed">
                     <?php foreach($allProducts as $product):?>
-                        <tr class="ccat<?php echo $product->cId;?>">
+                        <tr class="ccat<?php echo $product->pId;?>">
                             <td>
-                                <?php echo $product->cId;?>
+                                <?php echo $product->pId;?>
                             </td>
                             <td>
-                                <?php echo $product->cName;?>
+                                <?php echo $product->pName;?>
                             </td>
                             <td>
-                                <a href="<?php echo site_url("admin/editCategory/".$product->cId);?>" class="btn btn-info">Edit</a>
+                                <a href="<?php echo site_url("admin/editProduct/".$product->pId);?>" class="btn btn-info">Edit</a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" class="btn btn-danger delcat" data-id="<?php echo $product->cId;?>" data-text="<?php echo $this->encryption->encrypt($product->cId)?>">Delete</a>
+                                <a href="javascript:void(0)" class="btn btn-danger delcat" data-id="<?php echo $product->pId;?>" data-text="<?php echo $this->encryption->encrypt($product->pId)?>">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach ?>

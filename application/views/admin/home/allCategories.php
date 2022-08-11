@@ -22,6 +22,7 @@
                                 <?php echo $category->cName;?>
                             </td>
                             <td>
+                                
                                 <a href="<?php echo site_url("admin/editCategory/".$category->cId);?>" class="btn btn-info">Edit</a>
                             </td>
                             <td>

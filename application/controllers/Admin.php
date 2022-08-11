@@ -214,6 +214,7 @@ class Admin extends CI_Controller
             setFlashData("alert-danger", "updateCategory Please login first to add your category", "admin/login");
         }
     }
+    
 
     public function deleteCategory()
     {

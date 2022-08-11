@@ -230,6 +230,7 @@ class ModAdmin extends CI_Model
     {
         $this->db->where("spId", $spId);
         return $this->db->delete("specs");
+        
     }
 
     public function checkSpecById($spId)

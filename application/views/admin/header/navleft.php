@@ -67,10 +67,12 @@
             <li><a href="<?php echo site_url("admin/allCategories")?>"> All Category</a></li>
             <li><a href="<?php echo site_url("admin/newProduct")?>"> New Product</a></li>
             <li><a href="<?php echo site_url("admin/allProducts")?>"> All Product</a></li>
-            <!-- <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li> -->
+            <li><a href="<?php echo site_url("admin/newModel")?>"> New Model</a></li>
+            <li><a href="<?php echo site_url("admin/allModels")?>"> All Models</a></li>
+            <li><a href="<?php echo site_url("admin/newSpec")?>"> New Spec</a></li>
+            <li><a href="<?php echo site_url("admin/allSpecs")?>"> All Specs</a></li>
           </ul>
+          <
         </li><!-- End of 編集箇所 -->
         <li>
           <a href="pages/widgets.html">

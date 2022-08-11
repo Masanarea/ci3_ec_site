@@ -31,4 +31,37 @@ function getAdminId()
     }
 }
 
+// 開発用
+function d($data)
+{
+    echo "<pre>";
+    echo "dataの中身";
+    echo "<pre>";
+    var_dump($data) ;
+    echo "<pre>";
+}
+// 開発用
+function dd($reason,$data)
+{
+    echo "<pre>";
+    echo "使用用途・・・$reason";
+    echo "<pre>";
+    echo "dataの中身";
+    echo "<pre>";
+    var_dump($data) ;
+    echo "<pre>";
+}
+// 開発用
+function w(){
+    echo "working..";
+}
+// 開発用
+function e(){
+    exit;
+}
+// 開発用
+function ee(){
+    echo "<pre>";
+    exit("working..");
+}
 ?>

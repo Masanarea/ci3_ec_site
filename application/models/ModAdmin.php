@@ -21,9 +21,9 @@ class ModAdmin extends CI_Model
         return $this->db->get_where("categories", array("cStatus" =>1))->num_rows();
     }
 
-    public function fetchAllCategories($limit,$start)
+    public function fetchAllCategories($limit, $start)
     {
-        $this->db->limit($limit,$start);
+        $this->db->limit($limit, $start);
         $query = $this->db->get_where("categories", array("cStatus" =>1));
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
@@ -43,7 +43,7 @@ class ModAdmin extends CI_Model
     public function updateCategory($data, $cId)
     {
         $this->db->where("cId", $cId);
-        return $this->db->update("categories",$data);
+        return $this->db->update("categories", $data);
     }
 
     public function deleteCategory($cId)
@@ -54,7 +54,7 @@ class ModAdmin extends CI_Model
 
     public function getCategoryImage($cId)
     {
-        return $this->db->select("cDp")->from("categories")->where("cId",$cId)->get()->result_array();
+        return $this->db->select("cDp")->from("categories")->where("cId", $cId)->get()->result_array();
     }
 
     public function getCategories()
@@ -80,9 +80,9 @@ class ModAdmin extends CI_Model
         return $this->db->get_where("products", array("pStatus" =>1))->num_rows();
     }
 
-    public function fetchAllProducts($limit,$start)
+    public function fetchAllProducts($limit, $start)
     {
-        $this->db->limit($limit,$start);
+        $this->db->limit($limit, $start);
         $query = $this->db->get_where("products", array("pStatus" =>1));
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
@@ -102,7 +102,7 @@ class ModAdmin extends CI_Model
     public function updateProduct($data, $pId)
     {
         $this->db->where("pId", $pId);
-        return $this->db->update("products",$data);
+        return $this->db->update("products", $data);
     }
 
     public function deleteProduct($pId)
@@ -113,11 +113,132 @@ class ModAdmin extends CI_Model
 
     public function getProductImage($pId)
     {
-        return $this->db->select("pDp")->from("products")->where("pId",$pId)->get()->result_array();
+        return $this->db->select("pDp")->from("products")->where("pId", $pId)->get()->result_array();
     }
 
     public function getProducts()
     {
-        return $this->db->get_where("products", array("pStatus" =>1));
+        // return $this->db->get_where("categories", array("cStatus" =>1));
+        return $this->db->select("pId,pName")->from("products")->where("pStatus", 1)->get();
+    }
+    
+    public function checkModel($data)
+    {
+        return $this->db->get_where("models", array(
+            "mName"=>$data["mName"],
+            "productId"=>$data["productId"],
+        ));
+    }
+
+    public function addModel($data)
+    {
+        return $this->db->insert("models", $data);
+    }
+
+    public function getAllModels()
+    {
+        return $this->db->get_where("models", array("mStatus" =>1))->num_rows();
+    }
+
+    public function fetchAllModels($limit, $start)
+    {
+        $this->db->limit($limit, $start);
+        $this->db->order_by("mId", "desc");
+        $query = $this->db->get_where("models", array("mStatus" =>1));
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+    public function getModelImage($mId)
+    {
+        return $this->db->select("mDp")->from("models")->where("mId", $mId)->get()->result_array();
+    }
+
+    public function deleteModel($mId)
+    {
+        $this->db->where("mId", $mId);
+        return $this->db->delete("models");
+    }
+
+    public function checkModelById($mId)
+    {
+        return $this->db->get_where("models", array("mId" =>$mId))->result_array();
+    }
+
+
+
+    public function updateModel($data, $modeId)
+    {
+        $this->db->where("mId", $modeId);
+        return $this->db->update("models", $data);
+    }
+
+    public function getModel()
+    {
+        return $this->db->get_where("models", array("mStatus" =>1));
+    }
+
+    public function checkSpec($data)
+    {
+        return $this->db->get_where("specs", array(
+            "spName"=>$data["spName"],
+            "modelId"=>$data["modelId"],
+        ));
+    }
+
+    public function checkSpecName($data)
+    {
+        $this->db->insert("specs", $data);
+        return $this->db->insert_id();
+    }
+
+    public function checkSpecValues($value){
+        return $this->db->insert_batch("spec_values", $value);
+    }
+
+    public function getAllSpecs()
+    {
+        return $this->db->get_where("specs", array("spStatus" =>1))->num_rows();
+    }
+
+    public function fetchAllSpecs($limit, $start)
+    {
+        $this->db->limit($limit, $start);
+        $query = $this->db->select("specs.* , models.mName")
+                            ->from("specs")
+                            ->where("specs.spStatus","1")
+                            ->join("models","models.mId = specs.modelId")
+                            ->get();
+        // $query = $this->db->get_where("models", array("mStatus" =>1));
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteSpec($spId)
+    {
+        $this->db->where("spId", $spId);
+        return $this->db->delete("specs");
+    }
+
+    public function checkSpecById($spId)
+    {
+        return $this->db->get_where("specs", array("spId" =>$spId))->result_array();
+    }
+
+    public function updateSpec($data, $specId){
+        $this->db->where("spId", $specId);
+        return $this->db->update("specs", $data);
     }
 }

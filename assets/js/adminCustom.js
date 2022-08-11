@@ -15,6 +15,7 @@ $(function(){
                 var ndata = JSON.parse(data);
                 // 開発用
                 // console.log(ndata);
+                
                 if(ndata.return == true){
                     $(".error").text(ndata.message);
                     $(".ccat"+id).fadeOut();

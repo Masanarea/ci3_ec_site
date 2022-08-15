@@ -479,7 +479,8 @@ class Admin extends CI_Controller
             $data["mName"] = $this->input->post("modelName", true);
             $data["mDescription"] = $this->input->post("md", true);
             $data["productId"] = $this->input->post("productId", true);
-            if (!empty($data["mName"]) && !empty($data["mDescription"]) && !empty($data["productId"])) {
+            $data["price"] = $this->input->post("price", true);
+            if (!empty($data["mName"]) && !empty($data["mDescription"]) && !empty($data["productId"]) && !empty($data["price"])) {
                 $path = realpath(APPPATH."../assets/images/models/");
                 $config["upload_path"] = $path;
                 $config["allowed_types"] = "gif|png|jpg|jpeg";

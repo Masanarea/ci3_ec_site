@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array("database", "session", "encryption");
+$autoload['libraries'] = array("database", "session", "encryption", "form_validation", "email");
 
 /*
 | -------------------------------------------------------------------
@@ -92,7 +92,7 @@ $autoload['drivers'] = array();
 // $autoload['helper'] = array('url')は最初にURLを読み込んでくれる
 // <link rel="stylesheet" type="text/css" href="">
 // <link rel="stylesheet" type="text/css" href="http://localhost:8888/assets/css/style.css">
-$autoload['helper'] = array('url', "custom_helper", "form");
+$autoload['helper'] = array('url', "custom_helper", "form", 'security', "string");
 
 /*
 | -------------------------------------------------------------------
@@ -135,4 +135,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array("modAdmin");
+$autoload['model'] = array("modAdmin", "modUser", "modHome");

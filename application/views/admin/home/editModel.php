@@ -32,6 +32,10 @@
                 ?>
                 </div>
                 <div class="form-group">
+                    <label for="">price</label>
+                    <?php echo form_input("price", $model[0]["price"], array("placeholder"=>"Enter price","class"=>"form-control"))?>
+                </div>
+                <div class="form-group">
                     <?php echo  form_upload("modelDp", "", "")?>
                 </div>
                 <div class="form-group">

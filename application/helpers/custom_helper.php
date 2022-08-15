@@ -31,6 +31,35 @@ function getAdminId()
     }
 }
 
+function userLoggedIn()
+{
+    $CI = get_instance();
+    $CI->load->library("session");
+    if ($CI->session->userdata("uId")) {
+        return true;
+        
+    }else{
+        return false;
+    }
+}
+
+function checkFlash(){
+    $CI = get_instance();
+    $CI->load->library("session");
+    if ($CI->session->userdata("class")) {
+        $data["class"] = $CI->session->userdata("class");
+        $data["message"] = $CI->session->userdata("message");
+        $CI->load->view("flashdata", $data);
+    }
+}
+
+function getSpecs($modelId){
+    $CI = get_instance();
+    // $CI->load->library("database");
+        // return $CI->db->get_where("specs", array("spStatus" => 1, "modelId" => $modelId));
+        return $CI->db->get_where("specs", array("spStatus" => 1, "modelId" => $modelId));
+}
+
 // 開発用
 function d($data)
 {
@@ -53,7 +82,15 @@ function dd($reason,$data)
 }
 // 開発用
 function w(){
+    echo "<pre>";
     echo "working..";
+    echo "<pre>";
+}
+// 開発用
+function nw(){
+    echo "<pre>";
+    echo "Not working..";
+    echo "<pre>";
 }
 // 開発用
 function e(){

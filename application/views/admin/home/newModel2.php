@@ -33,6 +33,10 @@
                     <?php echo  form_upload("modelDp", "", "")?>
                 </div>
                 <div class="form-group">
+                    <label for="">price</label>
+                    <?php echo form_input("price", "", array("placeholder"=>"Enter price","class"=>"form-control"))?>
+                </div>
+                <div class="form-group">
                     <?php echo  form_submit("Add Model", "Add Model", "class='btn btn-primary'")?>
                 </div>
             <?php echo form_close();?>

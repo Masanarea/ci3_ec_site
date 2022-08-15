@@ -1,9 +1,10 @@
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/style.css")?>">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<head>
+		<meta charset="utf-8">
+		<title>MyShop - Responsive HTML5 Template</title>
+		<meta name="keywords" content="HTML5 Template">
+		<meta name="description" content="MyShop - Responsive HTML5 Template">
+		<meta name="author" content="etheme.com">
+		<link rel="shortcut icon" href="<?php echo base_url("assets/assets/theme/favicon.ico")?>">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">

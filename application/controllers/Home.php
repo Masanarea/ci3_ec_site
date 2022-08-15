@@ -4,13 +4,13 @@ class Home extends CI_Controller
 {
     public function index()
     {
-        // echo "working..";
-        // loadで簡単テンプレート
+        $data["categories"] = $this->modHome->getAllCategories();
+        $data["products"] = $this->modHome->getAllProducts(2);
         $this->load->view('header/header');
-        // 何もないのにloadするとエラーになる
         $this->load->view('header/css');
         $this->load->view('header/navbar');
-        $this->load->view('home/mainHome');
+        $this->load->view('home/mainHome',$data);
+        // $this->load->view('home/main',$data);
         $this->load->view('header/footer');
     }
 
